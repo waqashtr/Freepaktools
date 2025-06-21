@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online image upscaler tool to enhance and enlarge your images without losing quality.">
+    <title>Image Upscaler - Free Pak Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0E7D71;
+            --secondary: #F4F4F4;
+            --accent: #FFB703;
+            --text: #333333;
+            --light-text: #777777;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ad-container {
+            width: 100%;
+            background-color: var(--white);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            animation: fadeIn 1s ease;
+        }
+
+        .ad-container p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin: 2rem 0;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .tool-header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tool-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background-color: rgba(14, 125, 113, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .upload-area h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #e0a602;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0b645a;
+        }
+
+        .options {
+            margin: 2rem 0;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-option input {
+            margin-right: 0.5rem;
+        }
+
+        .slider-container {
+            margin-top: 1rem;
+        }
+
+        .slider-container input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+        }
+
+        .slider-value {
+            text-align: center;
+            color: var(--primary);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 2rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .comparison {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .image-box {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .image-box p {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .how-to-use {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .how-to-use h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .how-to-use ol {
+            padding-left: 1.5rem;
+        }
+
+        .how-to-use li {
+            margin-bottom: 1rem;
+        }
+
+        .comments-section {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1.4s ease;
+        }
+
+        .comments-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(14, 125, 113, 0.2);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .comment-content {
+            color: var(--text);
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+
+            .comparison {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">Free <span>Pak</span> Tools</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Top AdMob Banner Ad -->
+            <div id="top-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="9985840610"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="tool-header">
+            <h1>Image Upscaler</h1>
+            <p>Enhance and upscale your images without losing quality. Perfect for low-resolution photos.</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <i>🖼️</i>
+                <h3>Upload Your Image</h3>
+                <p>Drag & drop your image here or click to browse</p>
+                <p>Supports: JPG, PNG, WEBP (Max 10MB)</p>
+                <input type="file" id="fileInput" accept="image/jpeg, image/png, image/webp">
+            </div>
+
+            <div class="options">
+                <div class="option-group">
+                    <h3>Upscale Factor</h3>
+                    <div class="slider-container">
+                        <input type="range" id="scaleSlider" min="2" max="4" step="1" value="2">
+                        <div class="slider-value" id="scaleValue">2x</div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Enhancement Mode</h3>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="modeStandard" name="enhanceMode" value="standard" checked>
+                            <label for="modeStandard">Standard</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="modeSharp" name="enhanceMode" value="sharp">
+                            <label for="modeSharp">Sharp Details</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="modeSmooth" name="enhanceMode" value="smooth">
+                            <label for="modeSmooth">Smooth</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" id="upscaleBtn" disabled>Upscale Image</button>
+                <button class="btn btn-secondary" id="resetBtn">Reset</button>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <div class="comparison">
+                    <div class="image-box">
+                        <img id="originalImage" src="" alt="Original Image">
+                        <p>Original Image</p>
+                    </div>
+                    <div class="image-box">
+                        <img id="upscaledImage" src="" alt="Upscaled Image">
+                        <p>Upscaled Image</p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" id="downloadBtn">Download Upscaled Image</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-to-use">
+            <h2>How to Use This Tool</h2>
+            <ol>
+                <li><strong>Upload your image:</strong> Click on the upload area or drag and drop your image file into the designated area. The tool supports JPG, PNG, and WEBP formats with a maximum file size of 10MB.</li>
+                <li><strong>Select upscale factor:</strong> Use the slider to choose how much you want to upscale your image (2x, 3x, or 4x the original size).</li>
+                <li><strong>Choose enhancement mode:</strong> Select between Standard (balanced), Sharp Details (for clearer edges), or Smooth (for softer images) depending on your needs.</li>
+                <li><strong>Process the image:</strong> Click the "Upscale Image" button to begin the enhancement process. This may take a few moments depending on your image size.</li>
+                <li><strong>View and download:</strong> Compare the original and upscaled images side by side. If satisfied with the result, click "Download Upscaled Image" to save it to your device.</li>
+            </ol>
+            <p><strong>Tip:</strong> For best results, start with the highest quality image available. The upscaler works best with images that are slightly blurry or low-resolution rather than extremely pixelated images.</p>
+        </div>
+
+        <div class="comments-section">
+            <h2>Comments & Feedback</h2>
+            <div class="comment-form">
+                <div class="form-group">
+                    <label for="commentName">Name</label>
+                    <input type="text" id="commentName" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="commentText">Comment</label>
+                    <textarea id="commentText" placeholder="Your feedback or experience with this tool"></textarea>
+                </div>
+                <button class="btn" id="submitComment">Submit Comment</button>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <!-- Comments will be added here dynamically -->
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <!-- Bottom AdMob Banner Ad -->
+            <div id="bottom-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="7468306722"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Free Pak Tools. All rights reserved.</p>
+        <p>Free online tools for everyday needs.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const scaleSlider = document.getElementById('scaleSlider');
+            const scaleValue = document.getElementById('scaleValue');
+            const upscaleBtn = document.getElementById('upscaleBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const originalImage = document.getElementById('originalImage');
+            const upscaledImage = document.getElementById('upscaledImage');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const commentName = document.getElementById('commentName');
+            const commentText = document.getElementById('commentText');
+            const submitComment = document.getElementById('submitComment');
+            const commentsList = document.getElementById('commentsList');
+
+            // Variables
+            let currentFile = null;
+            let upscaledImageData = null;
+
+            // Event Listeners
+            fileInput.addEventListener('change', handleFileSelect);
+            scaleSlider.addEventListener('input', updateScaleValue);
+            upscaleBtn.addEventListener('click', upscaleImage);
+            resetBtn.addEventListener('click', resetTool);
+            downloadBtn.addEventListener('click', downloadImage);
+            submitComment.addEventListener('click', addComment);
+
+            // Drag and drop events
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--accent);
+                uploadArea.style.backgroundColor = 'rgba(14, 125, 113, 0.1)';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect({ target: fileInput });
+                }
+            });
+
+            // Functions
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image file (JPEG, PNG, or WEBP).');
+                    return;
+                }
+
+                // Check file size (10MB max)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size exceeds 10MB limit. Please choose a smaller file.');
+                    return;
+                }
+
+                currentFile = file;
+                upscaleBtn.disabled = false;
+
+                // Display original image
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    originalImage.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+
+                // Update upload area text
+                uploadArea.querySelector('h3').textContent = file.name;
+                uploadArea.querySelector('p').textContent = `${(file.size / 1024).toFixed(2)} KB`;
+            }
+
+            function updateScaleValue() {
+                const value = scaleSlider.value;
+                scaleValue.textContent = `${value}x`;
+            }
+
+            function upscaleImage() {
+                if (!currentFile) return;
+
+                // Show loading state
+                upscaleBtn.disabled = true;
+                upscaleBtn.textContent = 'Processing...';
+
+                // Simulate processing delay (in a real app, this would be actual image processing)
+                setTimeout(() => {
+                    // Create a canvas to simulate upscaling
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const scale = parseInt(scaleSlider.value);
+                        canvas.width = img.width * scale;
+                        canvas.height = img.height * scale;
+                        
+                        const ctx = canvas.getContext('2d');
+                        ctx.imageSmoothingQuality = 'high';
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                        // Apply different filters based on enhancement mode
+                        const mode = document.querySelector('input[name="enhanceMode"]:checked').value;
+                        if (mode === 'sharp') {
+                            // Simulate sharpening
+                            ctx.filter = 'contrast(1.1) saturate(1.1)';
+                            ctx.drawImage(canvas, 0, 0);
+                            ctx.filter = 'none';
+                        } else if (mode === 'smooth') {
+                            // Simulate smoothing
+                            ctx.filter = 'blur(0.5px)';
+                            ctx.drawImage(canvas, 0, 0);
+                            ctx.filter = 'none';
+                        }
+
+                        upscaledImageData = canvas.toDataURL('image/jpeg', 0.9);
+                        upscaledImage.src = upscaledImageData;
+
+                        // Show results
+                        resultContainer.classList.add('show');
+                        upscaleBtn.textContent = 'Upscale Image';
+                        upscaleBtn.disabled = false;
+                    };
+                    img.src = URL.createObjectURL(currentFile);
+                }, 1500);
+            }
+
+            function resetTool() {
+                fileInput.value = '';
+                currentFile = null;
+                upscaledImageData = null;
+                originalImage.src = '';
+                upscaledImage.src = '';
+                resultContainer.classList.remove('show');
+                upscaleBtn.disabled = true;
+                scaleSlider.value = 2;
+                scaleValue.textContent = '2x';
+                document.getElementById('modeStandard').checked = true;
+
+                // Reset upload area text
+                uploadArea.querySelector('h3').textContent = 'Upload Your Image';
+                uploadArea.querySelector('p').textContent = 'Drag & drop your image here or click to browse';
+                uploadArea.querySelectorAll('p')[1].textContent = 'Supports: JPG, PNG, WEBP (Max 10MB)';
+            }
+
+            function downloadImage() {
+                if (!upscaledImageData) return;
+
+                const link = document.createElement('a');
+                link.href = upscaledImageData;
+                link.download = `upscaled_${currentFile.name}`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function addComment() {
+                const name = commentName.value.trim();
+                const text = commentText.value.trim();
+
+                if (!name || !text) {
+                    alert('Please enter both your name and a comment.');
+                    return;
+                }
+
+                const comment = {
+                    name,
+                    text,
+                    date: new Date().toLocaleDateString()
+                };
+
+                // In a real app, you would save to a database here
+                // For this demo, we'll just add to the page
+                displayComment(comment);
+
+                // Clear form
+                commentName.value = '';
+                commentText.value = '';
+            }
+
+            function displayComment(comment) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-content">${comment.text}</div>
+                `;
+                commentsList.prepend(commentElement);
+            }
+
+            // Load any existing comments (in a real app, these would come from a database)
+            const sampleComments = [
+                { name: 'Ali R.', text: 'This tool worked great for enhancing my old family photos!', date: '10/15/2023' },
+                { name: 'Sara K.', text: 'Simple to use and effective. The 4x upscale worked perfectly for my product images.', date: '10/10/2023' }
+            ];
+
+            sampleComments.forEach(displayComment);
+        });
+    </script>
+</body>
+</html>
