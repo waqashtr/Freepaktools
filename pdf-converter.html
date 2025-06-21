@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online PDF converter tool to convert PDFs to Word, Excel, PowerPoint, JPG and more.">
+    <title>PDF Converter - Free Pak Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0E7D71;
+            --secondary: #F4F4F4;
+            --accent: #FFB703;
+            --text: #333333;
+            --light-text: #777777;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ad-container {
+            width: 100%;
+            background-color: var(--white);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            animation: fadeIn 1s ease;
+        }
+
+        .ad-container p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin: 2rem 0;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .tool-header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tool-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background-color: rgba(14, 125, 113, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .upload-area h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #e0a602;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0b645a;
+        }
+
+        .options {
+            margin: 2rem 0;
+        }
+
+        .option-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .option-group h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .select-container {
+            position: relative;
+        }
+
+        .select-container select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.8rem center;
+            background-size: 1rem;
+        }
+
+        .select-container select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(14, 125, 113, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-container {
+            display: none;
+            margin-top: 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-container p {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .how-to-use {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .how-to-use h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .how-to-use ol {
+            padding-left: 1.5rem;
+        }
+
+        .how-to-use li {
+            margin-bottom: 1rem;
+        }
+
+        .comments-section {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1.4s ease;
+        }
+
+        .comments-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(14, 125, 113, 0.2);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .comment-content {
+            color: var(--text);
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">Free <span>Pak</span> Tools</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Top AdMob Banner Ad -->
+            <div id="top-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="3371766150"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="tool-header">
+            <h1>PDF Converter</h1>
+            <p>Convert PDFs to various formats like Word, Excel, or images with just a few clicks.</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="upload-area" id="uploadArea">
+                <i>📄</i>
+                <h3>Upload Your PDF</h3>
+                <p>Drag & drop your PDF file here or click to browse</p>
+                <p>Supports: PDF (Max 20MB)</p>
+                <input type="file" id="fileInput" accept=".pdf">
+            </div>
+
+            <div class="options">
+                <div class="option-group">
+                    <h3>Convert To</h3>
+                    <div class="select-container">
+                        <select id="formatSelect">
+                            <option value="docx">Microsoft Word (DOCX)</option>
+                            <option value="xlsx">Microsoft Excel (XLSX)</option>
+                            <option value="pptx">Microsoft PowerPoint (PPTX)</option>
+                            <option value="jpg">JPG Image</option>
+                            <option value="png">PNG Image</option>
+                            <option value="txt">Plain Text (TXT)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h3>Conversion Options</h3>
+                    <div id="conversionOptions">
+                        <!-- Options will be shown based on selected format -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn" id="convertBtn" disabled>Convert PDF</button>
+                <button class="btn btn-secondary" id="resetBtn">Reset</button>
+            </div>
+
+            <div class="result-container" id="resultContainer">
+                <p>Your PDF has been successfully converted!</p>
+                <div class="action-buttons">
+                    <button class="btn" id="downloadBtn">Download Converted File</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-to-use">
+            <h2>How to Use This Tool</h2>
+            <ol>
+                <li><strong>Upload your PDF:</strong> Click on the upload area or drag and drop your PDF file into the designated area. The tool supports PDF files with a maximum size of 20MB.</li>
+                <li><strong>Select output format:</strong> Choose the format you want to convert your PDF to from the dropdown menu. Options include Word (DOCX), Excel (XLSX), PowerPoint (PPTX), JPG, PNG, and plain text (TXT).</li>
+                <li><strong>Adjust conversion options (if available):</strong> Depending on the selected format, additional options may appear to customize your conversion.</li>
+                <li><strong>Convert the file:</strong> Click the "Convert PDF" button to begin the conversion process. This may take a few moments depending on your file size and selected format.</li>
+                <li><strong>Download your file:</strong> Once the conversion is complete, click "Download Converted File" to save the converted file to your device.</li>
+            </ol>
+            <p><strong>Note:</strong> For complex PDFs with multiple pages or advanced formatting, some elements may not convert perfectly. Always review the converted file to ensure it meets your needs.</p>
+        </div>
+
+        <div class="comments-section">
+            <h2>Comments & Feedback</h2>
+            <div class="comment-form">
+                <div class="form-group">
+                    <label for="commentName">Name</label>
+                    <input type="text" id="commentName" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="commentText">Comment</label>
+                    <textarea id="commentText" placeholder="Your feedback or experience with this tool"></textarea>
+                </div>
+                <button class="btn" id="submitComment">Submit Comment</button>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <!-- Comments will be added here dynamically -->
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <!-- Bottom AdMob Banner Ad -->
+            <div id="bottom-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="6648666181"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Free Pak Tools. All rights reserved.</p>
+        <p>Free online tools for everyday needs.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const formatSelect = document.getElementById('formatSelect');
+            const conversionOptions = document.getElementById('conversionOptions');
+            const convertBtn = document.getElementById('convertBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultContainer = document.getElementById('resultContainer');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const commentName = document.getElementById('commentName');
+            const commentText = document.getElementById('commentText');
+            const submitComment = document.getElementById('submitComment');
+            const commentsList = document.getElementById('commentsList');
+
+            // Variables
+            let currentFile = null;
+            let convertedFileData = null;
+
+            // Event Listeners
+            fileInput.addEventListener('change', handleFileSelect);
+            formatSelect.addEventListener('change', updateConversionOptions);
+            convertBtn.addEventListener('click', convertFile);
+            resetBtn.addEventListener('click', resetTool);
+            downloadBtn.addEventListener('click', downloadFile);
+            submitComment.addEventListener('click', addComment);
+
+            // Drag and drop events
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--accent);
+                uploadArea.style.backgroundColor = 'rgba(14, 125, 113, 0.1)';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect({ target: fileInput });
+                }
+            });
+
+            // Initialize conversion options
+            updateConversionOptions();
+
+            // Functions
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // Check file type
+                if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+                    alert('Please upload a valid PDF file.');
+                    return;
+                }
+
+                // Check file size (20MB max)
+                if (file.size > 20 * 1024 * 1024) {
+                    alert('File size exceeds 20MB limit. Please choose a smaller file.');
+                    return;
+                }
+
+                currentFile = file;
+                convertBtn.disabled = false;
+
+                // Update upload area text
+                uploadArea.querySelector('h3').textContent = file.name;
+                uploadArea.querySelector('p').textContent = `${(file.size / 1024).toFixed(2)} KB`;
+            }
+
+            function updateConversionOptions() {
+                const format = formatSelect.value;
+                let optionsHTML = '';
+
+                switch (format) {
+                    case 'docx':
+                        optionsHTML = `
+                            <div class="radio-option">
+                                <input type="checkbox" id="preserveLayout" checked>
+                                <label for="preserveLayout">Preserve original layout</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="checkbox" id="includeImages" checked>
+                                <label for="includeImages">Include images</label>
+                            </div>
+                        `;
+                        break;
+                    case 'xlsx':
+                        optionsHTML = `
+                            <div class="radio-option">
+                                <input type="checkbox" id="eachPageToSheet" checked>
+                                <label for="eachPageToSheet">Each page to separate sheet</label>
+                            </div>
+                        `;
+                        break;
+                    case 'pptx':
+                        optionsHTML = `
+                            <div class="radio-option">
+                                <input type="checkbox" id="eachPageToSlide" checked>
+                                <label for="eachPageToSlide">Each page to separate slide</label>
+                            </div>
+                        `;
+                        break;
+                    case 'jpg':
+                    case 'png':
+                        optionsHTML = `
+                            <div class="radio-option">
+                                <input type="radio" id="allPages" name="imagePages" value="all" checked>
+                                <label for="allPages">Convert all pages</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="singlePage" name="imagePages" value="single">
+                                <label for="singlePage">Convert only first page</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="checkbox" id="highQuality" checked>
+                                <label for="highQuality">High quality images</label>
+                            </div>
+                        `;
+                        break;
+                    case 'txt':
+                        optionsHTML = `
+                            <div class="radio-option">
+                                <input type="checkbox" id="preserveFormatting">
+                                <label for="preserveFormatting">Preserve basic formatting</label>
+                            </div>
+                        `;
+                        break;
+                }
+
+                conversionOptions.innerHTML = optionsHTML;
+            }
+
+            function convertFile() {
+                if (!currentFile) return;
+
+                // Show loading state
+                convertBtn.disabled = true;
+                convertBtn.textContent = 'Converting...';
+
+                // Simulate conversion delay (in a real app, this would be actual PDF conversion)
+                setTimeout(() => {
+                    // Create a dummy download link
+                    const format = formatSelect.value;
+                    let mimeType, extension;
+
+                    switch (format) {
+                        case 'docx':
+                            mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+                            extension = 'docx';
+                            break;
+                        case 'xlsx':
+                            mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+                            extension = 'xlsx';
+                            break;
+                        case 'pptx':
+                            mimeType = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+                            extension = 'pptx';
+                            break;
+                        case 'jpg':
+                            mimeType = 'image/jpeg';
+                            extension = 'jpg';
+                            break;
+                        case 'png':
+                            mimeType = 'image/png';
+                            extension = 'png';
+                            break;
+                        case 'txt':
+                            mimeType = 'text/plain';
+                            extension = 'txt';
+                            break;
+                    }
+
+                    const fileName = currentFile.name.replace(/\.pdf$/i, '') + '.' + extension;
+                    convertedFileData = {
+                        name: fileName,
+                        type: mimeType,
+                        data: `data:${mimeType};base64,${btoa('Simulated converted file content')}`
+                    };
+
+                    // Show results
+                    resultContainer.classList.add('show');
+                    convertBtn.textContent = 'Convert PDF';
+                    convertBtn.disabled = false;
+                }, 2000);
+            }
+
+            function resetTool() {
+                fileInput.value = '';
+                currentFile = null;
+                convertedFileData = null;
+                resultContainer.classList.remove('show');
+                convertBtn.disabled = true;
+                convertBtn.textContent = 'Convert PDF';
+                formatSelect.value = 'docx';
+                updateConversionOptions();
+
+                // Reset upload area text
+                uploadArea.querySelector('h3').textContent = 'Upload Your PDF';
+                uploadArea.querySelector('p').textContent = 'Drag & drop your PDF file here or click to browse';
+                uploadArea.querySelectorAll('p')[1].textContent = 'Supports: PDF (Max 20MB)';
+            }
+
+            function downloadFile() {
+                if (!convertedFileData) return;
+
+                const link = document.createElement('a');
+                link.href = convertedFileData.data;
+                link.download = convertedFileData.name;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            function addComment() {
+                const name = commentName.value.trim();
+                const text = commentText.value.trim();
+
+                if (!name || !text) {
+                    alert('Please enter both your name and a comment.');
+                    return;
+                }
+
+                const comment = {
+                    name,
+                    text,
+                    date: new Date().toLocaleDateString()
+                };
+
+                // In a real app, you would save to a database here
+                // For this demo, we'll just add to the page
+                displayComment(comment);
+
+                // Clear form
+                commentName.value = '';
+                commentText.value = '';
+            }
+
+            function displayComment(comment) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-content">${comment.text}</div>
+                `;
+                commentsList.prepend(commentElement);
+            }
+
+            // Load any existing comments (in a real app, these would come from a database)
+            const sampleComments = [
+                { name: 'Ahmed S.', text: 'Converted my PDF to Word perfectly! All formatting was preserved.', date: '10/12/2023' },
+                { name: 'Fatima K.', text: 'Great tool for quick conversions. Used it to extract text from a scanned PDF.', date: '10/05/2023' }
+            ];
+
+            sampleComments.forEach(displayComment);
+        });
+    </script>
+</body>
+</html>
