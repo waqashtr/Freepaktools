@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online color picker tool to select colors from images or palette and get HEX, RGB, HSL values.">
+    <title>Color Picker - Free Pak Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0E7D71;
+            --secondary: #F4F4F4;
+            --accent: #FFB703;
+            --text: #333333;
+            --light-text: #777777;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo a {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ad-container {
+            width: 100%;
+            background-color: var(--white);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            animation: fadeIn 1s ease;
+        }
+
+        .ad-container p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin: 2rem 0;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .tool-header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--light-text);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tool-container {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .tab-buttons {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: var(--light-text);
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area:hover {
+            border-color: var(--accent);
+            background-color: rgba(14, 125, 113, 0.05);
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .upload-area h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area p {
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            cursor: crosshair;
+        }
+
+        .color-preview {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: var(--secondary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            display: none;
+        }
+
+        .color-swatch {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .color-swatch:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-swatch .color-value {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.3rem;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .color-info {
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .color-info h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .color-display {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .color-codes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .color-code {
+            background-color: var(--white);
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .color-code h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .color-code input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .palette-color {
+            height: 60px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .palette-color:hover {
+            transform: scale(1.05);
+        }
+
+        .palette-color .color-hex {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.2rem;
+            font-size: 0.7rem;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #e0a602;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary);
+            margin-left: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0b645a;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .how-to-use {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .how-to-use h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .how-to-use ol {
+            padding-left: 1.5rem;
+        }
+
+        .how-to-use li {
+            margin-bottom: 1rem;
+        }
+
+        .comments-section {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1.4s ease;
+        }
+
+        .comments-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .comment-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(14, 125, 113, 0.2);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment {
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comment-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .comment-content {
+            color: var(--text);
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .tool-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+
+            .tab-btn {
+                flex: 1;
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tool-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .upload-area {
+                padding: 2rem 1rem;
+            }
+
+            .color-codes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">Free <span>Pak</span> Tools</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Top AdMob Banner Ad -->
+            <div id="top-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="4022502845"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="tool-header">
+            <h1>Color Picker</h1>
+            <p>Select colors from images or choose from palette and get HEX, RGB, HSL values.</p>
+        </div>
+
+        <div class="tool-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="image-tab">From Image</button>
+                <button class="tab-btn" data-tab="palette-tab">From Palette</button>
+            </div>
+
+            <div class="tab-content active" id="image-tab">
+                <div class="upload-area" id="uploadArea">
+                    <i>🎨</i>
+                    <h3>Upload Your Image</h3>
+                    <p>Drag & drop your image here or click to browse</p>
+                    <p>Supports: JPG, PNG, WEBP (Max 10MB)</p>
+                    <input type="file" id="fileInput" accept="image/jpeg, image/png, image/webp">
+                </div>
+
+                <div class="image-preview" id="imagePreview">
+                    <img id="previewImage" src="" alt="Image Preview">
+                </div>
+
+                <div class="color-preview" id="colorPreview">
+                    <!-- Color swatches will be added here -->
+                </div>
+
+                <div class="color-info" id="colorInfo">
+                    <h3>Selected Color</h3>
+                    <div class="color-display" id="colorDisplay"></div>
+                    <div class="color-codes">
+                        <div class="color-code">
+                            <h4>HEX</h4>
+                            <input type="text" id="hexValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>RGB</h4>
+                            <input type="text" id="rgbValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>HSL</h4>
+                            <input type="text" id="hslValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>CMYK</h4>
+                            <input type="text" id="cmykValue" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn" id="resetBtn">Reset</button>
+                </div>
+            </div>
+
+            <div class="tab-content" id="palette-tab">
+                <div class="color-palette" id="colorPalette">
+                    <!-- Palette colors will be added here -->
+                </div>
+
+                <div class="color-info" id="paletteColorInfo">
+                    <h3>Selected Color</h3>
+                    <div class="color-display" id="paletteColorDisplay"></div>
+                    <div class="color-codes">
+                        <div class="color-code">
+                            <h4>HEX</h4>
+                            <input type="text" id="paletteHexValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>RGB</h4>
+                            <input type="text" id="paletteRgbValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>HSL</h4>
+                            <input type="text" id="paletteHslValue" readonly>
+                        </div>
+                        <div class="color-code">
+                            <h4>CMYK</h4>
+                            <input type="text" id="paletteCmykValue" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-to-use">
+            <h2>How to Use This Tool</h2>
+            <ol>
+                <li><strong>From Image tab:</strong>
+                    <ul>
+                        <li>Upload an image by clicking the upload area or dragging and dropping an image file.</li>
+                        <li>Click anywhere on the image to pick a color from that point.</li>
+                        <li>The tool will display the selected color along with its HEX, RGB, HSL, and CMYK values.</li>
+                        <li>Multiple picked colors will be shown as swatches below the image for easy reference.</li>
+                    </ul>
+                </li>
+                <li><strong>From Palette tab:</strong>
+                    <ul>
+                        <li>Browse through the pre-defined color palette with various color schemes.</li>
+                        <li>Click on any color to view its HEX, RGB, HSL, and CMYK values.</li>
+                        <li>Use these values in your design projects by copying them to your clipboard.</li>
+                    </ul>
+                </li>
+            </ol>
+            <p><strong>Tip:</strong> For the most accurate color picking from images, use high-quality images with good lighting. The color values provided can be directly used in CSS, graphic design software, or any other application that accepts color codes.</p>
+        </div>
+
+        <div class="comments-section">
+            <h2>Comments & Feedback</h2>
+            <div class="comment-form">
+                <div class="form-group">
+                    <label for="commentName">Name</label>
+                    <input type="text" id="commentName" placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="commentText">Comment</label>
+                    <textarea id="commentText" placeholder="Your feedback or experience with this tool"></textarea>
+                </div>
+                <button class="btn" id="submitComment">Submit Comment</button>
+            </div>
+            <div class="comments-list" id="commentsList">
+                <!-- Comments will be added here dynamically -->
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <!-- Bottom AdMob Banner Ad -->
+            <div id="bottom-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="3420432268"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Free Pak Tools. All rights reserved.</p>
+        <p>Free online tools for everyday needs.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImage = document.getElementById('previewImage');
+            const colorPreview = document.getElementById('colorPreview');
+            const colorInfo = document.getElementById('colorInfo');
+            const colorDisplay = document.getElementById('colorDisplay');
+            const hexValue = document.getElementById('hexValue');
+            const rgbValue = document.getElementById('rgbValue');
+            const hslValue = document.getElementById('hslValue');
+            const cmykValue = document.getElementById('cmykValue');
+            const resetBtn = document.getElementById('resetBtn');
+            const colorPalette = document.getElementById('colorPalette');
+            const paletteColorInfo = document.getElementById('paletteColorInfo');
+            const paletteColorDisplay = document.getElementById('paletteColorDisplay');
+            const paletteHexValue = document.getElementById('paletteHexValue');
+            const paletteRgbValue = document.getElementById('paletteRgbValue');
+            const paletteHslValue = document.getElementById('paletteHslValue');
+            const paletteCmykValue = document.getElementById('paletteCmykValue');
+            const commentName = document.getElementById('commentName');
+            const commentText = document.getElementById('commentText');
+            const submitComment = document.getElementById('submitComment');
+            const commentsList = document.getElementById('commentsList');
+
+            // Variables
+            let currentFile = null;
+            let selectedColors = [];
+            const paletteColors = [
+                // Primary colors
+                '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
+                // Material Design colors
+                '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', 
+                '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39',
+                '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#607D8B',
+                // Pastels
+                '#FFD1DC', '#FFECB8', '#E0F7FA', '#E8F5E9', '#F3E5F5', '#FFF3E0',
+                // Grayscale
+                '#FFFFFF', '#F5F5F5', '#EEEEEE', '#E0E0E0', '#BDBDBD', '#9E9E9E',
+                '#757575', '#616161', '#424242', '#212121', '#000000'
+            ];
+
+            // Event Listeners
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', switchTab);
+            });
+
+            fileInput.addEventListener('change', handleFileSelect);
+            previewImage.addEventListener('click', pickColorFromImage);
+            resetBtn.addEventListener('click', resetTool);
+            submitComment.addEventListener('click', addComment);
+
+            // Drag and drop events
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--accent);
+                uploadArea.style.backgroundColor = 'rgba(14, 125, 113, 0.1)';
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = var(--primary);
+                uploadArea.style.backgroundColor = 'transparent';
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelect({ target: fileInput });
+                }
+            });
+
+            // Initialize
+            createColorPalette();
+
+            // Functions
+            function switchTab(e) {
+                const tabId = e.target.getAttribute('data-tab');
+                
+                // Update tab buttons
+                tabBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Update tab contents
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(tabId).classList.add('active');
+            }
+
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    alert('Please upload a valid image file (JPEG, PNG, or WEBP).');
+                    return;
+                }
+
+                // Check file size (10MB max)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('File size exceeds 10MB limit. Please choose a smaller file.');
+                    return;
+                }
+
+                currentFile = file;
+
+                // Display image preview
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    previewImage.src = event.target.result;
+                    imagePreview.style.display = 'block';
+                    colorPreview.style.display = 'flex';
+                };
+                reader.readAsDataURL(file);
+
+                // Update upload area text
+                uploadArea.querySelector('h3').textContent = file.name;
+                uploadArea.querySelector('p').textContent = `${(file.size / 1024).toFixed(2)} KB`;
+            }
+
+            function pickColorFromImage(e) {
+                // Create canvas to get pixel data
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = previewImage.width;
+                canvas.height = previewImage.height;
+                ctx.drawImage(previewImage, 0, 0, canvas.width, canvas.height);
+                
+                // Get pixel data at clicked position
+                const rect = previewImage.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const pixel = ctx.getImageData(x, y, 1, 1).data;
+                
+                // Convert to HEX
+                const hex = rgbToHex(pixel[0], pixel[1], pixel[2]);
+                
+                // Add to selected colors if not already there
+                if (!selectedColors.includes(hex)) {
+                    selectedColors.push(hex);
+                    createColorSwatches();
+                }
+                
+                // Show color info
+                showColorInfo(pixel[0], pixel[1], pixel[2], colorDisplay, hexValue, rgbValue, hslValue, cmykValue);
+                colorInfo.style.display = 'block';
+            }
+
+            function createColorSwatches() {
+                colorPreview.innerHTML = '';
+                
+                selectedColors.forEach(color => {
+                    const swatch = document.createElement('div');
+                    swatch.className = 'color-swatch';
+                    swatch.style.backgroundColor = color;
+                    swatch.innerHTML = `<div class="color-value">${color}</div>`;
+                    
+                    swatch.addEventListener('click', function() {
+                        const rgb = hexToRgb(color);
+                        showColorInfo(rgb.r, rgb.g, rgb.b, colorDisplay, hexValue, rgbValue, hslValue, cmykValue);
+                    });
+                    
+                    colorPreview.appendChild(swatch);
+                });
+            }
+
+            function createColorPalette() {
+                colorPalette.innerHTML = '';
+                
+                paletteColors.forEach(color => {
+                    const paletteColor = document.createElement('div');
+                    paletteColor.className = 'palette-color';
+                    paletteColor.style.backgroundColor = color;
+                    paletteColor.innerHTML = `<div class="color-hex">${color}</div>`;
+                    
+                    paletteColor.addEventListener('click', function() {
+                        const rgb = hexToRgb(color);
+                        showColorInfo(rgb.r, rgb.g, rgb.b, paletteColorDisplay, paletteHexValue, paletteRgbValue, paletteHslValue, paletteCmykValue);
+                        paletteColorInfo.style.display = 'block';
+                    });
+                    
+                    colorPalette.appendChild(paletteColor);
+                });
+            }
+
+            function showColorInfo(r, g, b, displayEl, hexEl, rgbEl, hslEl, cmykEl) {
+                // Set display color
+                displayEl.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                
+                // HEX
+                const hex = rgbToHex(r, g, b);
+                hexEl.value = hex;
+                
+                // RGB
+                rgbEl.value = `rgb(${r}, ${g}, ${b})`;
+                
+                // HSL
+                const hsl = rgbToHsl(r, g, b);
+                hslEl.value = `hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`;
+                
+                // CMYK
+                const cmyk = rgbToCmyk(r, g, b);
+                cmykEl.value = `cmyk(${Math.round(cmyk.c)}%, ${Math.round(cmyk.m)}%, ${Math.round(cmyk.y)}%, ${Math.round(cmyk.k)}%)`;
+            }
+
+            function rgbToHex(r, g, b) {
+                return '#' + [r, g, b].map(x => {
+                    const hex = x.toString(16);
+                    return hex.length === 1 ? '0' + hex : hex;
+                }).join('');
+            }
+
+            function hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? {
+                    r: parseInt(result[1], 16),
+                    g: parseInt(result[2], 16),
+                    b: parseInt(result[3], 16)
+                } : null;
+            }
+
+            function rgbToHsl(r, g, b) {
+                r /= 255, g /= 255, b /= 255;
+                const max = Math.max(r, g, b), min = Math.min(r, g, b);
+                let h, s, l = (max + min) / 2;
+
+                if (max === min) {
+                    h = s = 0; // achromatic
+                } else {
+                    const d = max - min;
+                    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                    switch (max) {
+                        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                        case g: h = (b - r) / d + 2; break;
+                        case b: h = (r - g) / d + 4; break;
+                    }
+                    h *= 60;
+                }
+
+                return { h, s: s * 100, l: l * 100 };
+            }
+
+            function rgbToCmyk(r, g, b) {
+                let c, m, y, k;
+                
+                r = r / 255;
+                g = g / 255;
+                b = b / 255;
+                
+                k = 1 - Math.max(r, g, b);
+                
+                if (k === 1) {
+                    c = m = y = 0;
+                } else {
+                    c = (1 - r - k) / (1 - k);
+                    m = (1 - g - k) / (1 - k);
+                    y = (1 - b - k) / (1 - k);
+                }
+                
+                return {
+                    c: c * 100,
+                    m: m * 100,
+                    y: y * 100,
+                    k: k * 100
+                };
+            }
+
+            function resetTool() {
+                fileInput.value = '';
+                currentFile = null;
+                selectedColors = [];
+                previewImage.src = '';
+                imagePreview.style.display = 'none';
+                colorPreview.style.display = 'none';
+                colorInfo.style.display = 'none';
+                colorPreview.innerHTML = '';
+                
+                // Reset upload area text
+                uploadArea.querySelector('h3').textContent = 'Upload Your Image';
+                uploadArea.querySelector('p').textContent = 'Drag & drop your image here or click to browse';
+                uploadArea.querySelectorAll('p')[1].textContent = 'Supports: JPG, PNG, WEBP (Max 10MB)';
+            }
+
+            function addComment() {
+                const name = commentName.value.trim();
+                const text = commentText.value.trim();
+
+                if (!name || !text) {
+                    alert('Please enter both your name and a comment.');
+                    return;
+                }
+
+                const comment = {
+                    name,
+                    text,
+                    date: new Date().toLocaleDateString()
+                };
+
+                // In a real app, you would save to a database here
+                // For this demo, we'll just add to the page
+                displayComment(comment);
+
+                // Clear form
+                commentName.value = '';
+                commentText.value = '';
+            }
+
+            function displayComment(comment) {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.name}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <div class="comment-content">${comment.text}</div>
+                `;
+                commentsList.prepend(commentElement);
+            }
+
+            // Load any existing comments (in a real app, these would come from a database)
+            const sampleComments = [
+                { name: 'Farhan A.', text: 'Great tool for extracting color schemes from my reference images!', date: '08/10/2023' },
+                { name: 'Nadia K.', text: 'The palette tab is perfect when I need inspiration for my designs.', date: '08/02/2023' }
+            ];
+
+            sampleComments.forEach(displayComment);
+        });
+    </script>
+</body>
+</html>
