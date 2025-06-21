@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free Pak Tools - A collection of 13 free online tools for everyday needs including image upscaling, PDF conversion, password generation and more.">
+    <title>Free Pak Tools - Free Online Tools for Everyone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0E7D71;
+            --secondary: #F4F4F4;
+            --accent: #FFB703;
+            --text: #333333;
+            --light-text: #777777;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--secondary);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .ad-container {
+            width: 100%;
+            background-color: var(--white);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            animation: fadeIn 1s ease;
+        }
+
+        .ad-container p {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+
+        .tools-section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 600;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .tool-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tool-icon {
+            background-color: var(--primary);
+            color: var(--white);
+            font-size: 2.5rem;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tool-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .tool-desc {
+            color: var(--light-text);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .tool-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            transition: var(--transition);
+            margin-top: auto;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .tool-btn:hover {
+            background-color: #e0a602;
+            transform: translateY(-2px);
+        }
+
+        .seo-content {
+            background-color: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 3rem 0;
+            animation: fadeIn 1.2s ease;
+        }
+
+        .seo-content h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .seo-content p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        footer {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.3rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .seo-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Free <span>Pak</span> Tools</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="ad-container">
+            <!-- Top AdMob Banner Ad -->
+            <div id="top-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="3739146401"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <section class="tools-section">
+            <h2 class="section-title">Our Free Online Tools</h2>
+            <div class="tools-grid">
+                <!-- Tool 1: Image Upscaler -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🖼️</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Image Upscaler</h3>
+                        <p class="tool-desc">Enhance and upscale your images without losing quality. Perfect for low-resolution photos.</p>
+                        <a href="image-upscaler.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 2: PDF Converter -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>📄</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">PDF Converter</h3>
+                        <p class="tool-desc">Convert PDFs to various formats like Word, Excel, or images with just a few clicks.</p>
+                        <a href="pdf-converter.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 3: Background Remover -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>✂️</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Background Remover</h3>
+                        <p class="tool-desc">Remove backgrounds from images automatically and download with transparent background.</p>
+                        <a href="background-remover.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 4: Password Generator -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🔒</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Password Generator</h3>
+                        <p class="tool-desc">Create strong, secure passwords with customizable length and character types.</p>
+                        <a href="password-generator.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 5: Video to MP3 -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🎵</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Video to MP3</h3>
+                        <p class="tool-desc">Extract audio from videos and convert to high-quality MP3 files instantly.</p>
+                        <a href="video-to-mp3.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 6: Color Picker -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🎨</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Color Picker</h3>
+                        <p class="tool-desc">Select colors from images or choose from palette and get HEX, RGB, HSL values.</p>
+                        <a href="color-picker.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 7: PDF Merger -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>📑</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">PDF Merger</h3>
+                        <p class="tool-desc">Combine multiple PDF files into a single document in your preferred order.</p>
+                        <a href="pdf-merger.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 8: Fancy Text Generator -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>✍️</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Fancy Text Generator</h3>
+                        <p class="tool-desc">Create stylish, decorative text with various fonts for social media and designs.</p>
+                        <a href="fancy-text-generator.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 9: Audio to Text -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🎤</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Audio to Text</h3>
+                        <p class="tool-desc">Transcribe audio files to text automatically with high accuracy.</p>
+                        <a href="audio-to-text.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 10: Islamic Calendar -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🕌</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Islamic Calendar</h3>
+                        <p class="tool-desc">View Hijri dates, Islamic months, and important dates with Gregorian conversions.</p>
+                        <a href="islamic-calendar.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 11: Receipt Generator -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>🧾</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Receipt Generator</h3>
+                        <p class="tool-desc">Create professional receipts with customizable fields for your business needs.</p>
+                        <a href="receipt-generator.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 12: Web Screenshot -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>📸</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Web Screenshot</h3>
+                        <p class="tool-desc">Capture screenshots of any website in different resolutions and formats.</p>
+                        <a href="web-screenshot.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+
+                <!-- Tool 13: Logo Remover -->
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i>❌</i>
+                    </div>
+                    <div class="tool-content">
+                        <h3 class="tool-title">Logo Remover</h3>
+                        <p class="tool-desc">Remove unwanted logos or watermarks from images while preserving the background.</p>
+                        <a href="logo-remover.html" class="tool-btn">Use Tool</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="seo-content">
+            <h2>Welcome to Free Pak Tools - Your Ultimate Free Online Tools Collection</h2>
+            <p>Free Pak Tools is a comprehensive collection of 13 completely free online tools designed to make your digital life easier. Whether you're a professional, student, or casual internet user, our tools can help you accomplish various tasks quickly and efficiently without any cost.</p>
+            
+            <h3>Why Choose Free Pak Tools?</h3>
+            <p>In today's fast-paced digital world, having access to reliable online tools can save you time, money, and frustration. Free Pak Tools offers several advantages:</p>
+            
+            <p><strong>1. Completely Free:</strong> Unlike many other online tools that offer limited functionality for free and then require payment for full features, all our tools are 100% free with no hidden charges.</p>
+            
+            <p><strong>2. No Registration Required:</strong> You don't need to create an account or provide any personal information to use our tools. Just open the tool you need and start using it immediately.</p>
+            
+            <p><strong>3. Privacy Focused:</strong> We respect your privacy. Most of our tools process your files directly in your browser without uploading them to our servers, ensuring your data remains private.</p>
+            
+            <p><strong>4. Mobile-Friendly:</strong> All our tools are designed to work perfectly on both desktop and mobile devices, so you can use them anywhere, anytime.</p>
+            
+            <p><strong>5. Regular Updates:</strong> We continuously improve our tools based on user feedback and technological advancements to provide you with the best possible experience.</p>
+            
+            <h3>Detailed Overview of Our Tools</h3>
+            
+            <p><strong>Image Upscaler:</strong> Enhance your low-resolution images without losing quality. Perfect for enlarging old photos, improving product images for e-commerce, or preparing images for print.</p>
+            
+            <p><strong>PDF Converter:</strong> Convert PDF files to various formats including Word (DOCX), Excel (XLSX), PowerPoint (PPTX), JPG, and more. Also works in reverse, allowing you to create PDFs from other file types.</p>
+            
+            <p><strong>Background Remover:</strong> Remove backgrounds from images automatically with AI technology. Ideal for product photography, creating profile pictures, or designing marketing materials.</p>
+            
+            <p><strong>Password Generator:</strong> Create strong, secure passwords with customizable options including length, character types (uppercase, lowercase, numbers, symbols), and memorable passphrases.</p>
+            
+            <p><strong>Video to MP3:</strong> Extract audio from video files and save as high-quality MP3. Great for creating audio versions of presentations, saving music from videos, or podcast creation.</p>
+            
+            <p><strong>Color Picker:</strong> Select colors from images or choose from a comprehensive palette. Get color codes in HEX, RGB, HSL, and CMYK formats for design projects.</p>
+            
+            <p><strong>PDF Merger:</strong> Combine multiple PDF documents into one file while maintaining the original quality. Useful for compiling reports, combining scanned documents, or organizing digital paperwork.</p>
+            
+            <p><strong>Fancy Text Generator:</strong> Create stylish, decorative text with various fonts and effects for use on social media, gaming profiles, or graphic designs.</p>
+            
+            <p><strong>Audio to Text:</strong> Convert speech from audio files into accurate text transcripts. Helpful for journalists, students, researchers, or anyone needing to transcribe interviews, lectures, or meetings.</p>
+            
+            <p><strong>Islamic Calendar:</strong> View Hijri dates alongside Gregorian dates, with information about Islamic months and important dates. Essential for Muslims worldwide for religious observances.</p>
+            
+            <p><strong>Receipt Generator:</strong> Create professional-looking receipts with customizable fields for business name, items, prices, taxes, and totals. Perfect for small businesses and freelancers.</p>
+            
+            <p><strong>Web Screenshot:</strong> Capture screenshots of entire web pages or specific sections in various resolutions and formats. Useful for documentation, web design, or content creation.</p>
+            
+            <p><strong>Logo Remover:</strong> Remove unwanted logos, watermarks, or objects from images while preserving the background. Helpful for cleaning up images for personal or professional use.</p>
+            
+            <h3>How to Use Free Pak Tools</h3>
+            <p>Using our tools is simple and straightforward:</p>
+            <p>1. Browse our collection of tools on the homepage and click on the one you need.</p>
+            <p>2. Follow the on-screen instructions specific to each tool.</p>
+            <p>3. Upload your file (if required) or input your data.</p>
+            <p>4. Process your file or generate your output.</p>
+            <p>5. Download or copy your result.</p>
+            
+            <h3>Our Commitment to Quality</h3>
+            <p>At Free Pak Tools, we're committed to providing high-quality, reliable tools that deliver accurate results. We understand that your time is valuable, and our tools are designed to help you accomplish tasks quickly without compromising on quality.</p>
+            
+            <p>All our tools undergo rigorous testing before being made available to ensure they work as expected. We regularly monitor performance and make improvements based on user feedback and technological advancements.</p>
+            
+            <h3>Privacy and Security</h3>
+            <p>We take your privacy and security seriously. Most of our tools process your files directly in your browser without uploading them to our servers. For tools that do require server processing (like some AI-based tools), we ensure that your files are deleted immediately after processing and are never stored permanently.</p>
+            
+            <p>We don't use tracking cookies or collect unnecessary personal data. Our advertising partners may use cookies for ad personalization, but you can opt out of this in your browser settings if preferred.</p>
+            
+            <h3>Support and Feedback</h3>
+            <p>We value your feedback and are always looking for ways to improve our tools. If you have any suggestions, encounter any issues, or would like to request a new tool, please don't hesitate to reach out through the comment sections available on each tool page.</p>
+            
+            <p>While we don't offer direct customer support, we monitor all feedback and implement improvements regularly. For common issues, we've included detailed "How to Use" sections on each tool page to help you get the most out of our tools.</p>
+            
+            <h3>Future Plans</h3>
+            <p>We're constantly working to expand our collection of free online tools. Based on user demand, we plan to add more specialized tools in areas like:</p>
+            <p>- Advanced image editing and enhancement</p>
+            <p>- Document formatting and optimization</p>
+            <p>- Data analysis and visualization</p>
+            <p>- Educational and learning tools</p>
+            <p>- Productivity and organization tools</p>
+            
+            <p>Our goal is to become your go-to resource for all online tool needs, saving you time and effort in your daily digital tasks.</p>
+            
+            <h3>Final Thoughts</h3>
+            <p>Free Pak Tools was created with a simple mission: to provide high-quality, free online tools that anyone can use without restrictions. Whether you're working on a professional project, studying for school, or just need to accomplish a quick digital task, we hope our tools can make your life easier.</p>
+            
+            <p>Bookmark our site and check back regularly as we continue to add new tools and improve existing ones. Thank you for choosing Free Pak Tools - we're honored to be part of your digital toolkit!</p>
+        </div>
+
+        <div class="ad-container">
+            <!-- Bottom AdMob Banner Ad -->
+            <div id="bottom-banner-ad">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8894441711880316" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-8894441711880316"
+                     data-ad-slot="4566811218"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Free Pak Tools. All rights reserved.</p>
+        <p>Free online tools for everyday needs.</p>
+    </footer>
+
+    <script>
+        // Simple animation for tool cards on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
